@@ -5,12 +5,15 @@ import com.liuhao.shardingjdbcdemo.entity.Codes;
 import com.liuhao.shardingjdbcdemo.entity.WCodes;
 import com.liuhao.shardingjdbcdemo.mapper.CodesMapper;
 import com.liuhao.shardingjdbcdemo.mapper.WCodesMapper;
+import com.liuhao.shardingjdbcdemo.service.ICodesService;
+import com.liuhao.shardingjdbcdemo.service.impl.CodesServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +26,23 @@ public class ShardingjdbcdemoApplicationTests {
 
     @Autowired
     private WCodesMapper wcodesMapper;
+
+    @Autowired
+    private ICodesService codesService;
+
+    @Test
+    public void addBatch() {
+        List<Codes> entityList = new ArrayList<>(10000);
+        for (int i=0;i<10000;i++){
+            Codes codes = new Codes();
+            codes.setCODE("88" + i + "" + i + 1 + "1234");
+            entityList.add(codes);
+            System.err.println(codes.getCODE());
+        }
+        System.err.println(new Date());
+        boolean b = codesService.saveBatch(entityList);
+        System.err.println(new Date());
+    }
 
     @Test
     public void add() {
@@ -48,9 +68,9 @@ public class ShardingjdbcdemoApplicationTests {
         System.err.println(new Date());
         List<Codes> codes = codesMapper.selectList(null);
         System.err.println(new Date());
-        for(Codes code : codes){
-            System.err.println(code.toString());
-        }
+//        for(Codes code : codes){
+//            System.err.println(code.toString());
+//        }
     }
 
     @Test
