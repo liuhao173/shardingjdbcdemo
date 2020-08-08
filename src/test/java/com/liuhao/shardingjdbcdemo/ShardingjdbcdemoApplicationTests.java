@@ -6,7 +6,6 @@ import com.liuhao.shardingjdbcdemo.entity.WCodes;
 import com.liuhao.shardingjdbcdemo.mapper.CodesMapper;
 import com.liuhao.shardingjdbcdemo.mapper.WCodesMapper;
 import com.liuhao.shardingjdbcdemo.service.ICodesService;
-import com.liuhao.shardingjdbcdemo.service.impl.CodesServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
