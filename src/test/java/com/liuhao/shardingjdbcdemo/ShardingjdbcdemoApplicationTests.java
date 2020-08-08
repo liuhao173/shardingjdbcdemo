@@ -32,16 +32,19 @@ public class ShardingjdbcdemoApplicationTests {
 
     @Test
     public void addBatch() {
-        List<Codes> entityList = new ArrayList<>(10000);
-        for (int i=0;i<10000;i++){
-            Codes codes = new Codes();
-            codes.setCODE("88" + i + "" + i + 1 + "1234");
-            entityList.add(codes);
-            System.err.println(codes.getCODE());
+        for (int multiply = 0; multiply < 10; multiply++) {
+            List<Codes> entityList = new ArrayList<>(100000);
+            for (int count = multiply * 100000, t = 0; count < (multiply + 1) * 100000; count++, t++) {
+                if(t>9) t = 0;
+                Codes codes = new Codes();
+                codes.setCODE("88" + multiply + "" + t + "" + count);
+                entityList.add(codes);
+            }
+            long start = System.currentTimeMillis();
+            boolean b = codesService.saveBatch(entityList);
+            long over = System.currentTimeMillis();
+            System.out.println(multiply + " business used " + (over - start)/1000 + " s");
         }
-        System.err.println(new Date());
-        boolean b = codesService.saveBatch(entityList);
-        System.err.println(new Date());
     }
 
     @Test
@@ -56,18 +59,21 @@ public class ShardingjdbcdemoApplicationTests {
     @Test
     public void select() {
         QueryWrapper<Codes>  wrapper = new QueryWrapper<>();
-        wrapper.eq("CODE","88001234");
-        System.err.println(new Date());
+        wrapper.eq("CODE","8899930939");
+        long start = System.currentTimeMillis();
         Codes codes = codesMapper.selectOne(wrapper);
-        System.err.println(new Date());
+        long over = System.currentTimeMillis();
+        System.out.println(" business used " + (over - start)/1000 + " s");
         System.err.println(codes.toString());
     }
 
     @Test
     public void selectAll() {
-        System.err.println(new Date());
+        long start = System.currentTimeMillis();
         List<Codes> codes = codesMapper.selectList(null);
-        System.err.println(new Date());
+        long over = System.currentTimeMillis();
+        System.out.println(" business used " + (over - start)/1000 + " s");
+        System.err.println(codes.size());
 //        for(Codes code : codes){
 //            System.err.println(code.toString());
 //        }
